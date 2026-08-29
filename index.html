@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>✨ Report Card – Hadia Popal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* ─── RESET & BASE ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0b0719;
+            overflow: hidden;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        /* ─── ANIMATED BACKGROUND ─── */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-canvas .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.35;
+            animation: orbFloat 18s ease-in-out infinite alternate;
+        }
+
+        .bg-canvas .orb:nth-child(1) {
+            width: 450px;
+            height: 450px;
+            top: -10%;
+            left: -8%;
+            background: radial-gradient(circle, #6c3ce1, #4a9dff);
+            animation-duration: 22s;
+        }
+
+        .bg-canvas .orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            bottom: -12%;
+            right: -6%;
+            background: radial-gradient(circle, #ff6b9d, #f7a072);
+            animation-duration: 26s;
+            animation-delay: -6s;
+        }
+
+        .bg-canvas .orb:nth-child(3) {
+            width: 300px;
+            height: 300px;
+            top: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, #4a9dff, #6c3ce1);
+            animation-duration: 30s;
+            animation-delay: -12s;
+            opacity: 0.18;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(60px, -40px) scale(1.08);
+            }
+            66% {
+                transform: translate(-30px, 50px) scale(0.92);
+            }
+            100% {
+                transform: translate(40px, -20px) scale(1.04);
+            }
+        }
+
+        /* ─── STARS / SPARKLES ─── */
+        .stars {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0;
+            animation: starTwinkle var(--duration, 4s) ease-in-out infinite alternate;
+        }
+
+        @keyframes starTwinkle {
+            0% {
+                opacity: 0.05;
+                transform: scale(0.6);
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1.2);
+            }
+        }
+
+        /* ─── MAIN CARD ─── */
+        .card-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 560px;
+            perspective: 1200px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(28px) saturate(1.4);
+            -webkit-backdrop-filter: blur(28px) saturate(1.4);
+            border-radius: 3rem;
+            padding: 2.8rem 2.4rem 2.4rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 3rem;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 50%, rgba(255, 255, 255, 0.05));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-4px) scale(1.005);
+            box-shadow:
+                0 40px 100px rgba(108, 60, 225, 0.15),
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* ─── CARD HEADER ─── */
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-header .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.35), rgba(74, 157, 255, 0.25));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .card-header .badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(0.7);
+            }
+        }
+
+        .card-header .logo-icon {
+            font-size: 1.6rem;
+            opacity: 0.6;
+            filter: drop-shadow(0 0 12px rgba(108, 60, 225, 0.3));
+        }
+
+        /* ─── STUDENT INFO ─── */
+        .student-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .student-info .name {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 30%, #b8a5ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .student-info .father {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.45);
+            letter-spacing: 0.02em;
+        }
+
+        .student-info .father span {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .student-info .test-name {
+            margin-top: 0.4rem;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: rgba(255, 255, 255, 0.4);
+            align-self: flex-start;
+        }
+
+        /* ─── MARKS GRID ─── */
+        .marks-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .mark-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.2rem;
+            padding: 1rem 0.6rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: background 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mark-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1.2rem;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), transparent);
+            pointer-events: none;
+        }
+
+        .mark-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .mark-item .label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 0.3rem;
+        }
+
+        .mark-item .score {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .mark-item .score .out-of {
+            font-size: 0.8rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.25);
+        }
+
+        .mark-item.oral .score {
+            color: #fcd34d;
+        }
+        .mark-item.written .score {
+            color: #60a5fa;
+        }
+        .mark-item.practical .score {
+            color: #34d399;
+        }
+
+        /* ─── RESULT AREA (hidden initially) ─── */
+        .result-area {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 0.7s cubic-bezier(0.23, 1, 0.32, 1),
+                margin 0.6s ease;
+            margin-bottom: 0;
+        }
+
+        .result-area.visible {
+            max-height: 500px;
+            opacity: 1;
+            margin-bottom: 1.8rem;
+        }
+
+        .result-content {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.6rem;
+            padding: 1.6rem 1.8rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-content::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1.6rem;
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.06), rgba(74, 157, 255, 0.04));
+            pointer-events: none;
+        }
+
+        .result-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .result-stats .total {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .result-stats .total .label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .result-stats .total .value {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .result-stats .total .value span {
+            font-size: 1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .result-stats .percentage-wrap {
+            text-align: right;
+        }
+
+        .result-stats .percentage-wrap .label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .result-stats .percentage-wrap .value {
+            font-size: 2.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fcd34d, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .result-stats .grade {
+            padding: 0.3rem 1.2rem;
+            border-radius: 100px;
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1));
+            border: 1px solid rgba(251, 191, 36, 0.15);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fbbf24;
+            letter-spacing: 0.02em;
+        }
+
+        /* ─── CONGRATULATIONS ─── */
+        .congrats {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.9s cubic-bezier(0.23, 1, 0.32, 1),
+                opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.15s;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .congrats.visible {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 1.4rem;
+        }
+
+        .congrats .msg {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fcd34d, #f59e0b, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+
+        .congrats .msg .emoji {
+            -webkit-text-fill-color: initial;
+            background: none;
+        }
+
+        .congrats .sub {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.35);
+            margin-top: 0.2rem;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        /* ─── REVEAL BUTTON ─── */
+        .reveal-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            padding: 1rem 1.8rem;
+            border: none;
+            border-radius: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            background: linear-gradient(135deg, #6c3ce1, #4a9dff);
+            box-shadow: 0 8px 32px rgba(108, 60, 225, 0.35);
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.4s ease,
+                background 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.02em;
+        }
+
+        .reveal-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 100px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent 60%);
+            pointer-events: none;
+        }
+
+        .reveal-btn::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 100px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 60%, rgba(255, 255, 255, 0.05));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .reveal-btn:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.01);
+            box-shadow: 0 14px 48px rgba(108, 60, 225, 0.45);
+            background: linear-gradient(135deg, #7b4cf5, #5aabff);
+        }
+
+        .reveal-btn:hover:not(:disabled)::after {
+            opacity: 1;
+        }
+
+        .reveal-btn:active:not(:disabled) {
+            transform: translateY(0px) scale(0.98);
+        }
+
+        .reveal-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 16px rgba(108, 60, 225, 0.15);
+        }
+
+        .reveal-btn .icon {
+            font-size: 1.2rem;
+            transition: transform 0.4s ease;
+        }
+
+        .reveal-btn:not(:disabled):hover .icon {
+            transform: translateX(4px) scale(1.05);
+        }
+
+        .reveal-btn .btn-text {
+            transition: opacity 0.3s ease;
+        }
+
+        .reveal-btn .btn-text.hidden {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .reveal-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2.5px solid rgba(255, 255, 255, 0.15);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        .reveal-btn.loading .spinner {
+            display: block;
+        }
+        .reveal-btn.loading .btn-text {
+            display: none;
+        }
+        .reveal-btn.loading .icon {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ─── CONFETTI CANVAS ─── */
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 500px) {
+            .card {
+                padding: 1.8rem 1.2rem 1.6rem;
+                border-radius: 2rem;
+            }
+            .card-header .badge {
+                font-size: 0.55rem;
+                padding: 0.2rem 0.7rem;
+            }
+            .student-info .name {
+                font-size: 1.8rem;
+            }
+            .student-info .father {
+                font-size: 0.8rem;
+            }
+            .marks-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 0.5rem;
+            }
+            .mark-item {
+                padding: 0.7rem 0.3rem;
+                border-radius: 0.9rem;
+            }
+            .mark-item .score {
+                font-size: 1.3rem;
+            }
+            .mark-item .label {
+                font-size: 0.5rem;
+            }
+            .result-stats {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+                gap: 0.4rem;
+            }
+            .result-stats .percentage-wrap {
+                text-align: center;
+            }
+            .result-stats .percentage-wrap .value {
+                font-size: 2.2rem;
+            }
+            .result-stats .grade {
+                align-self: center;
+                font-size: 1.4rem;
+                padding: 0.2rem 1rem;
+            }
+            .result-content {
+                padding: 1.2rem 1rem;
+            }
+            .congrats .msg {
+                font-size: 1.6rem;
+            }
+            .reveal-btn {
+                font-size: 0.85rem;
+                padding: 0.8rem 1.2rem;
+            }
+            .result-stats .total .value {
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .card {
+                padding: 1.2rem 0.8rem 1.2rem;
+            }
+            .student-info .name {
+                font-size: 1.4rem;
+            }
+            .marks-grid {
+                gap: 0.3rem;
+            }
+            .mark-item .score {
+                font-size: 1rem;
+            }
+            .mark-item .score .out-of {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* ─── UTILITY ─── */
+        .text-glow {
+            text-shadow: 0 0 40px rgba(108, 60, 225, 0.15);
+        }
+
+        .mt-1 {
+            margin-top: 0.4rem;
+        }
+
+        /* scrollbar hide */
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        * {
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── BACKGROUND ORBS ─── -->
+    <div class="bg-canvas">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+
+    <!-- ─── STARS ─── -->
+    <div class="stars" id="stars"></div>
+
+    <!-- ─── CONFETTI CANVAS ─── -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- ─── MAIN CARD ─── -->
+    <div class="card-wrapper">
+        <div class="card" id="reportCard">
+
+            <!-- Header -->
+            <div class="card-header">
+                <div class="badge">
+                    <span class="dot"></span>
+                    Report Card
+                </div>
+                <div class="logo-icon">🏆</div>
+            </div>
+
+            <!-- Student Info -->
+            <div class="student-info">
+                <div class="name">Hadia Popal</div>
+                <div class="father">👨‍👧 <span>Shan Popal</span></div>
+                <div class="test-name">📘 Node.js – Final Assessment</div>
+            </div>
+
+            <!-- Marks Grid -->
+            <div class="marks-grid">
+                <div class="mark-item oral">
+                    <div class="label">🗣 Oral</div>
+                    <div class="score">7 <span class="out-of">/10</span></div>
+                </div>
+                <div class="mark-item written">
+                    <div class="label">✍ Written</div>
+                    <div class="score">9 <span class="out-of">/10</span></div>
+                </div>
+                <div class="mark-item practical">
+                    <div class="label">🔧 Practical</div>
+                    <div class="score">7 <span class="out-of">/10</span></div>
+                </div>
+            </div>
+
+            <!-- Result Area (hidden) -->
+            <div class="result-area" id="resultArea">
+                <div class="result-content">
+                    <div class="result-stats">
+                        <div class="total">
+                            <span class="label">Total Marks</span>
+                            <span class="value">23 <span>/ 30</span></span>
+                        </div>
+                        <div class="percentage-wrap">
+                            <span class="label">Percentage</span>
+                            <div class="value" id="percentageDisplay">76.67%</div>
+                        </div>
+                        <div class="grade" id="gradeDisplay">B+</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Congratulations -->
+            <div class="congrats" id="congratsArea">
+                <div class="msg">
+                    <span class="emoji">🎉</span>
+                    Congratulations!
+                    <span class="emoji">🎊</span>
+                </div>
+                <div class="sub">🌟 Outstanding performance, Hadia! Keep shining.</div>
+            </div>
+
+            <!-- Reveal Button -->
+            <button class="reveal-btn" id="revealBtn">
+                <span class="icon">🔮</span>
+                <span class="btn-text">Reveal Your Result</span>
+                <span class="spinner"></span>
+            </button>
+
+        </div>
+    </div>
+
+    <script>
+        // ─── STARS GENERATOR ───
+        (function createStars() {
+            const container = document.getElementById('stars');
+            const count = 80;
+            for (let i = 0; i < count; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = 1.5 + Math.random() * 2.5;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (3 + Math.random() * 5) + 's');
+                star.style.animationDelay = (Math.random() * 6) + 's';
+                container.appendChild(star);
+            }
+        })();
+
+        // ─── CONFETTI SYSTEM ───
+        (function confettiSystem() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            let W, H;
+            let particles = [];
+            let running = false;
+            let animationId = null;
+
+            function resize() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            class ConfettiParticle {
+                constructor() {
+                    this.reset();
+                    this.y = Math.random() * H - H * 0.2;
+                }
+                reset() {
+                    this.x = Math.random() * W;
+                    this.y = -20 - Math.random() * 60;
+                    this.w = 6 + Math.random() * 8;
+                    this.h = 4 + Math.random() * 6;
+                    this.color = `hsl(${Math.random() * 360}, 85%, 60%)`;
+                    this.vy = 2 + Math.random() * 3.5;
+                    this.vx = (Math.random() - 0.5) * 1.8;
+                    this.rotation = Math.random() * 360;
+                    this.rotationSpeed = (Math.random() - 0.5) * 8;
+                    this.opacity = 0.9 + Math.random() * 0.1;
+                    this.wobble = Math.random() * 10;
+                    this.wobbleSpeed = 0.02 + Math.random() * 0.03;
+                    this.phase = Math.random() * Math.PI * 2;
+                }
+                update() {
+                    this.y += this.vy;
+                    this.x += this.vx + Math.sin(this.phase) * 0.3;
+                    this.rotation += this.rotationSpeed;
+                    this.phase += this.wobbleSpeed;
+                    this.opacity -= 0.0015;
+                    if (this.y > H + 30 || this.opacity <= 0.02) {
+                        this.reset();
+                        this.y = -20 - Math.random() * 60;
+                        this.opacity = 0.9 + Math.random() * 0.1;
+                    }
+                }
+                draw() {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate((this.rotation * Math.PI) / 180);
+                    ctx.globalAlpha = Math.max(0, this.opacity);
+                    ctx.fillStyle = this.color;
+                    ctx.fillRect(-this.w / 2, -this.h / 2, this.w, this.h);
+                    ctx.restore();
+                }
+            }
+
+            function startConfetti(count = 140) {
+                if (running) return;
+                running = true;
+                particles = [];
+                for (let i = 0; i < count; i++) {
+                    const p = new ConfettiParticle();
+                    p.y = Math.random() * H * 0.4;
+                    particles.push(p);
+                }
+                if (animationId) cancelAnimationFrame(animationId);
+                animateConfetti();
+            }
+
+            function animateConfetti() {
+                if (!running) return;
+                ctx.clearRect(0, 0, W, H);
+                for (const p of particles) {
+                    p.update();
+                    p.draw();
+                }
+                animationId = requestAnimationFrame(animateConfetti);
+            }
+
+            function stopConfetti() {
+                running = false;
+                if (animationId) {
+                    cancelAnimationFrame(animationId);
+                    animationId = null;
+                }
+                ctx.clearRect(0, 0, W, H);
+                particles = [];
+            }
+
+            // Expose
+            window.__confetti = { start: startConfetti, stop: stopConfetti };
+        })();
+
+        // ─── MAIN INTERACTION ───
+        (function main() {
+            const revealBtn = document.getElementById('revealBtn');
+            const resultArea = document.getElementById('resultArea');
+            const congratsArea = document.getElementById('congratsArea');
+            const percentageDisplay = document.getElementById('percentageDisplay');
+            const gradeDisplay = document.getElementById('gradeDisplay');
+
+            let revealed = false;
+
+            // Calculate percentage & grade
+            const total = 23;
+            const max = 30;
+            const percent = (total / max) * 100;
+            const percentFixed = percent.toFixed(2);
+
+            let grade = '';
+            if (percent >= 90) grade = 'A+';
+            else if (percent >= 80) grade = 'A';
+            else if (percent >= 70) grade = 'B+';
+            else if (percent >= 60) grade = 'B';
+            else if (percent >= 50) grade = 'C+';
+            else if (percent >= 40) grade = 'C';
+            else grade = 'D';
+
+            // Set values
+            percentageDisplay.textContent = percentFixed + '%';
+            gradeDisplay.textContent = grade;
+
+            revealBtn.addEventListener('click', function(e) {
+                if (revealed) return;
+                revealed = true;
+
+                // Disable button & show loading
+                revealBtn.disabled = true;
+                revealBtn.classList.add('loading');
+
+                // Simulate a brief "loading" for drama
+                setTimeout(() => {
+                    // Reveal result
+                    resultArea.classList.add('visible');
+
+                    // After a beat, show congrats & confetti
+                    setTimeout(() => {
+                        congratsArea.classList.add('visible');
+                        // Launch confetti
+                        if (window.__confetti) {
+                            window.__confetti.start(160);
+                            // Stop confetti after 6 seconds
+                            setTimeout(() => {
+                                if (window.__confetti) {
+                                    window.__confetti.stop();
+                                }
+                            }, 6000);
+                        }
+
+                        // Update button
+                        revealBtn.classList.remove('loading');
+                        revealBtn.querySelector('.btn-text').textContent = '✨ Result Revealed';
+                        revealBtn.querySelector('.icon').textContent = '🎯';
+                        revealBtn.disabled = false;
+                        revealBtn.style.opacity = '0.7';
+                        revealBtn.style.cursor = 'default';
+
+                        // Small extra burst after 1s
+                        setTimeout(() => {
+                            if (window.__confetti) {
+                                window.__confetti.start(80);
+                                setTimeout(() => {
+                                    if (window.__confetti) window.__confetti.stop();
+                                }, 2500);
+                            }
+                        }, 1000);
+
+                    }, 500);
+
+                }, 900);
+            });
+
+            // Allow re-triggering confetti on click (if already revealed)
+            revealBtn.addEventListener('click', function() {
+                if (revealed && window.__confetti) {
+                    window.__confetti.start(100);
+                    setTimeout(() => {
+                        if (window.__confetti) window.__confetti.stop();
+                    }, 3000);
+                }
+            });
+
+            // ─── KEYBOARD ACCESSIBILITY ───
+            revealBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    revealBtn.click();
+                }
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
